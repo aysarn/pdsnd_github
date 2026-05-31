@@ -5,7 +5,8 @@ import numpy as np
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
-
+MONTHS = ['all', 'january', 'february', 'march', 'april', 'may', 'june']
+DAYS = ['all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -29,7 +30,7 @@ def get_filters():
     # user input month code:
     while True:
         month = input("Enter month (all, january, february, ... june): ").lower()
-        if month in ['all','january','february','march','april','may','june']:
+        if month in MONTHS:
             break
         else:
             print("Invalid month.")
@@ -38,7 +39,7 @@ def get_filters():
     # user input day of week code:
     while True:
         day = input("Enter day (all, monday, tuesday, ... sunday): ").lower()
-        if day in ['all','monday','tuesday','wednesday','thursday','friday','saturday','sunday']:
+        if day in DAYS:
             break
         else:
             print("Invalid day.")
@@ -61,8 +62,7 @@ def load_data(city, month, day):
 
     #filter by month if applicable
     if month != 'all':
-        months = ['january','february','march','april','may','june']
-        df = df[df['month'] == months.index(month) + 1]
+        df = df[df['month'] == MONTHS.index(month) + 1]
 
     #filter by day if applicable
     if day != 'all':
