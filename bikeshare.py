@@ -5,6 +5,17 @@ import numpy as np
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
+MONTHS = ['all', 'january', 'february', 'march', 'april', 'may', 'june']
+DAYS = ['all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+
+def timeit(func):
+    def wrapper(df):
+        start_time = time.time()
+        result = func(df)
+        print("\nThis took %s seconds." % (time.time() - start_time))
+        print('-' * 40)
+        return result
+    return wrapper
 
 def get_filters():
     """
@@ -29,7 +40,7 @@ def get_filters():
     # user input month code:
     while True:
         month = input("Enter month (all, january, february, ... june): ").lower()
-        if month in ['all','january','february','march','april','may','june']:
+        if month in MONTHS:
             break
         else:
             print("Invalid month.")
@@ -38,7 +49,7 @@ def get_filters():
     # user input day of week code:
     while True:
         day = input("Enter day (all, monday, tuesday, ... sunday): ").lower()
-        if day in ['all','monday','tuesday','wednesday','thursday','friday','saturday','sunday']:
+        if day in DAYS:
             break
         else:
             print("Invalid day.")
@@ -61,8 +72,7 @@ def load_data(city, month, day):
 
     #filter by month if applicable
     if month != 'all':
-        months = ['january','february','march','april','may','june']
-        df = df[df['month'] == months.index(month) + 1]
+        df = df[df['month'] == MONTHS.index(month) + 1]
 
     #filter by day if applicable
     if day != 'all':
@@ -70,7 +80,7 @@ def load_data(city, month, day):
 
     return df
 
-
+@timeit
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
 
@@ -90,7 +100,7 @@ def time_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-
+@timeit
 def station_stats(df):
     """Displays statistics on the most popular stations and trip."""
 
@@ -106,7 +116,7 @@ def station_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-
+@timeit
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
 
@@ -119,7 +129,7 @@ def trip_duration_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-
+@timeit
 def user_stats(df):
     """Displays statistics on bikeshare users."""
 
@@ -139,7 +149,7 @@ def user_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-
+@timeit
 def display_raw_data(df):
     """Display 5 lines of raw data based on user request"""
     start_loc = 0
