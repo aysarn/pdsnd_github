@@ -7,6 +7,16 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'washington': 'washington.csv' }
 MONTHS = ['all', 'january', 'february', 'march', 'april', 'may', 'june']
 DAYS = ['all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+
+def timeit(func):
+    def wrapper(df):
+        start_time = time.time()
+        result = func(df)
+        print("\nThis took %s seconds." % (time.time() - start_time))
+        print('-' * 40)
+        return result
+    return wrapper
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -70,7 +80,7 @@ def load_data(city, month, day):
 
     return df
 
-
+@timeit
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
 
@@ -90,7 +100,7 @@ def time_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-
+@timeit
 def station_stats(df):
     """Displays statistics on the most popular stations and trip."""
 
@@ -106,7 +116,7 @@ def station_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-
+@timeit
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
 
@@ -119,7 +129,7 @@ def trip_duration_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-
+@timeit
 def user_stats(df):
     """Displays statistics on bikeshare users."""
 
@@ -139,7 +149,7 @@ def user_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-
+@timeit
 def display_raw_data(df):
     """Display 5 lines of raw data based on user request"""
     start_loc = 0
